@@ -14,6 +14,7 @@ import RegisterSuccess from './pages/RegisterSuccess';
 import Login from './pages/Login';
 import UserAddressAdd from './pages/UserAddressAdd';
 import UserAddress from './pages/UserAdddress';
+import ManajemenProduk from './pages/ManajemenProduk';
 import Checkout from './pages/Checkout';
 import Invoice from './pages/Invoice'
 import UserAccount from './pages/UserAccount';
@@ -24,6 +25,7 @@ import Logout from './pages/Logout';
 import { getCart } from './api/cart';
 import GuardRoute from './components/GuardRoute';
 import GuestOnlyRoute from './components/GuestOnlyRoute';
+import GuardAdminRoute from './components/GuardAdminRoute';
 
 function App() {
   React.useEffect(() => {
@@ -56,6 +58,9 @@ function App() {
             <GuardRoute path="/alamat-pengiriman">
                 <UserAddress />            
             </GuardRoute>
+            <GuardAdminRoute path="/manajemen-produk">
+                <ManajemenProduk />            
+            </GuardAdminRoute>
             <GuestOnlyRoute path="/register">
               <Register />
             </GuestOnlyRoute>

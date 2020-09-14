@@ -17,9 +17,9 @@ import menus from './menus';
 import { config } from '../../config';
 import {
     fetchProducts,
-    setPage, // (1) import `setPage`
-    goToNextPage, // (2) import `goToNextPage`
-    goToPrevPage, // (3) import `goToPrevPage`
+    setPage,
+    goToNextPage,
+    goToPrevPage,
     setKeyword,
     setCategory,
     toggleTag,

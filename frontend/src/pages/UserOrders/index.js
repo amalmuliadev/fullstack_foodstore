@@ -59,7 +59,7 @@ const UserOrders = () => {
   let [count, setCount] = React.useState(0);
   let [status, setStatus] = React.useState('idle');
   let [page, setPage] = React.useState(1);
-  let [limit, setLimit] = React.useState(10);
+  let [limit] = React.useState(10);
 
   const fetchPesanan = React.useCallback( async () => {
     setStatus('process');
