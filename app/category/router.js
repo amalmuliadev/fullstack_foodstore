@@ -8,6 +8,7 @@ const multer = require('multer');
 const categoryController = require('./controller');
 
 // (4) endpoint untuk membuat kategori baru
+router.get('/categories', categoryController.index);
 router.post('/categories', multer().none(), categoryController.store);
 router.put('/categories/:id', multer().none(), categoryController.update);
 

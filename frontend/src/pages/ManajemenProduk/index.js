@@ -4,7 +4,8 @@ import { LayoutOne,
   Text,
   Button,
   Table,
-  InputText
+  InputText,
+  Badge
 } from 'upkit';
 import { Link, useHistory } from 'react-router-dom';
 import TopBar from '../../components/TopBar';
@@ -16,6 +17,7 @@ import {
     setPage,
     setKeyword,
     } from '../../features/Products/actions';
+
 
 const ManajemenProduk = () => {
   let dispatch = useDispatch();
@@ -32,6 +34,9 @@ const columns = [
   { Header: 'Nama', accessor: 'name'},
   { Header: 'Harga', accessor: items => formatRupiah(items.price)},
   { Header: 'Diskon', accessor: 'discount'},
+  { Header: 'Kategori', accessor: items => {
+      return <Badge color="blue">{items.category.name}</Badge>
+  }}
 ];
 
   return (
@@ -69,12 +74,6 @@ const columns = [
             onPageChange={page => dispatch(setPage(page))}
         />
     </div>
-    {!products.data.length ? <div className="text-center p-10">
-            Kamu belum memiliki Data Produk. <br/>
-            <Link to="/manajemen-produk/tambah">
-                <Button> Tambah Baru </Button>
-            </Link>
-        </div> : null}
     </LayoutOne>
   )
 }
