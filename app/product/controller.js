@@ -57,40 +57,43 @@ async function store(req, res, next){
 
   try{
 
-    let policy = policyFor(req.user);
+    // let policy = policyFor(req.user);
 
-		if(!policy.can('create', 'Product')){
-       return res.json({
-          error: 1, 
-          message: `Anda tidak memiliki akses untuk membuat produk`
-      });
-    }
+		// if(!policy.can('create', 'Product')){
+    //    return res.json({
+    //       error: 1, 
+    //       message: `Anda tidak memiliki akses untuk membuat produk`
+    //   });
+    // }
     
     let payload = req.body;
 
 		if(payload.category){
-		   let category = 
-				  await Category
-				  .findOne({name: {$regex: payload.category, $options: 'i'}});
+		  //  let category = 
+			// 	  await Category
+			// 	  .findOne({name: {$regex: payload.category, $options: 'i'}});
+
+      let category = payload.category;
 
 			 if(category){ 
-          payload = {...payload, category: category._id};
+          payload = {...payload, category: category};
        } else {
           delete payload.category;
        }
 		}
 
 		if(payload.tags && payload.tags.length){
-			let tags =
-				await Tag
-				.find({name: {$in: payload.tags}});
+			// let tags =
+			// 	await Tag
+			// 	.find({name: {$in: payload.tags}});
 
 			// (1) cek apakah tags membuahkan hasil
-			if(tags.length){
+			// if(tags.length){
+        let tags = payload.tags;
 				
 				// (2) jika ada, maka kita ambil `_id` untuk masing-masing `Tag` dan gabungkan dengan payload
-				payload = {...payload, tags: tags.map( tag => tag._id)}
-			}
+				payload = {...payload, tags: tags.map( tag => tag.value)}
+			// }
 		}
 
     if(req.file){

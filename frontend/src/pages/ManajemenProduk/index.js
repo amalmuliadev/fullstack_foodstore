@@ -5,11 +5,11 @@ import { LayoutOne,
   Button,
   Table,
   InputText,
-  Badge
+  Badge, ButtonCircle
 } from 'upkit';
-import { Link, useHistory } from 'react-router-dom';
+import FaFilter from '@meronex/icons/fa/FaFilter';
+import { Link } from 'react-router-dom';
 import TopBar from '../../components/TopBar';
-import BounceLoader from 'react-spinners/BounceLoader';
 import { useDispatch, useSelector } from 'react-redux';
 import { config } from '../../config';
 import {
@@ -29,7 +29,7 @@ const ManajemenProduk = () => {
 
 const columns = [
   { Header: 'Gambar', accessor: items => {
-  return <img style={{height: 40}} src={`${config.api_host}/upload/${items.image_url}`} />
+  return <img style={{height: 40}} src={`${config.api_host}/upload/${items.image_url}`} alt="gambarProduk"/>
   }},
   { Header: 'Nama', accessor: 'name'},
   { Header: 'Harga', accessor: items => formatRupiah(items.price)},
@@ -45,7 +45,7 @@ const columns = [
         <TopBar/>
         <Text as="h3"> Manajemen Data Produk </Text>
         <br />
-        <Link to="manajemen-produk/tambah">
+        <Link to="/manajemen-produk/tambah">
             <Button>
                 Tambah baru
             </Button>
@@ -58,6 +58,7 @@ const columns = [
                 value={products.keyword}
                 placeholder="cari produk"
                 fitContainer
+                iconAfter={<ButtonCircle icon={<FaFilter/>}/>}
                 onChange={e => {
                 dispatch(setKeyword(e.target.value))
             }}
@@ -69,9 +70,10 @@ const columns = [
             columns={columns}
             totalItems={products.totalItems}
             page={products.currentPage}
-            isLoading= {products.status == 'process'}
+            isLoading= {products.status === 'process'}
             perPage={products.perpage}
             onPageChange={page => dispatch(setPage(page))}
+            primaryKey={'_id'}
         />
     </div>
     </LayoutOne>

@@ -42,6 +42,10 @@ const policies = {
 
      // membaca `Invoice` miliknya
      can('read', 'Invoice', {user_id: user._id});
+
+     // membaca `Product` miliknya
+     can('create', 'Product', {user_id: user._id});
+
    },
 
    admin(user, {can}){

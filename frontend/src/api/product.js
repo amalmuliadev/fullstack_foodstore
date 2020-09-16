@@ -7,3 +7,13 @@ export async function getProducts(params){
         params,
     });
 }
+
+export async function createProduct(payload){
+    let { token } = localStorage.getItem('auth') ? JSON.parse(localStorage.getItem('auth')) : {};
+
+    return await axios.post(config.api_host + "/api/products", payload, {
+        headers: {
+            authorization: `Bearer ${token}`
+        }
+    })
+}

@@ -4,7 +4,8 @@
   "private": true,
   "scripts": {
     "seed": "node ./migration/tag_seeder.js",
-    "start": "node ./bin/www"
+    "start": "node ./bin/www",
+    "start_fe": "cd frontend/ && npm run start "
   },
   "dependencies": {
     "@casl/ability": "^4.1.5",

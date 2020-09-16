@@ -6,9 +6,12 @@ import { SideNav,
     CardProduct,
     Pagination,
     InputText,
-    Pill
+    Pill,
+    ButtonCircle
 } from 'upkit';
 import BounceLoader from 'react-spinners/BounceLoader';
+import FaSearch from '@meronex/icons/fa/FaSearch';
+
 import { useHistory } from 'react-router-dom';
 
 import TopBar from '../../components/TopBar';
@@ -58,18 +61,20 @@ const Home = () => {
                         <div className="w-full md:w-3/4 pl-5 pb-10">
 
                             <TopBar/>
-
+                            <br />
                             <div className="w-full text-center mb-10 mt-5">
                                 <InputText
                                     fullRound
                                     value={products.keyword}
-                                    placeholder="cari makanan favoritmu..."
+                                    placeholder=" Cari makanan favoritmu..."
                                     fitContainer
+                                    iconBefore={<ButtonCircle icon={<FaSearch/>}/>}
                                     onChange={e => {
                                     dispatch(setKeyword(e.target.value))
                                 }}
                                 />
                             </div>
+                            <br />
                             
                             <div className="mb-5 pl-2 flex w-3/3 overflow-auto pb-5">
                             {tags[products.category].map((tag, index) => {

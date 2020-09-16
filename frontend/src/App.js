@@ -15,6 +15,7 @@ import Login from './pages/Login';
 import UserAddressAdd from './pages/UserAddressAdd';
 import UserAddress from './pages/UserAdddress';
 import ManajemenProduk from './pages/ManajemenProduk';
+import ProductAdd from './pages/ProductAdd';
 import Checkout from './pages/Checkout';
 import Invoice from './pages/Invoice'
 import UserAccount from './pages/UserAccount';
@@ -58,6 +59,9 @@ function App() {
             <GuardRoute path="/alamat-pengiriman">
                 <UserAddress />            
             </GuardRoute>
+            <GuardAdminRoute path="/manajemen-produk/tambah">
+                <ProductAdd />            
+            </GuardAdminRoute>
             <GuardAdminRoute path="/manajemen-produk">
                 <ManajemenProduk />            
             </GuardAdminRoute>

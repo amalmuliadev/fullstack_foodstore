@@ -4,6 +4,7 @@ const multer = require('multer');
 
 const tagController = require('./controller');
 
+router.get('/tags', tagController.index);
 router.post('/tags', multer().none(), tagController.store);
 router.put('/tags/:id', multer().none(), tagController.update);
 router.delete('/tags/:id', tagController.destroy);
