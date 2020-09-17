@@ -68,7 +68,7 @@ const columns = [
         <Table
             items={products.data}
             columns={columns}
-            totalItems={products.totalItems}
+            totalItems={products.totalItems+15}
             page={products.currentPage}
             isLoading= {products.status === 'process'}
             perPage={products.perpage}

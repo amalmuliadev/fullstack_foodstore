@@ -7,7 +7,7 @@ import {LayoutOne,
   Text} from 'upkit';
 import TopBar from '../../components/TopBar';
 
-import {useForm} from 'react-hook-form';
+import { useForm } from 'react-hook-form';
 import { useHistory } from 'react-router-dom';
 import { rules } from './validation';
 import SelectCategory from '../../components/SelectCategory';
@@ -20,33 +20,42 @@ const ProductAdd = () => {
 
   let history = useHistory();
   let { handleSubmit, register, errors, setValue, watch, getValues } = useForm();
-  let [selectedFile, setIsSelectedFile] = React.useState();
-  
+  const [image, setImage] = React.useState({ preview: "", raw: "" });
+  // let [ selectedFile, setIsSelectedFile ] = React.useState();
+
   let allFields = watch();
+
 
   React.useEffect(() => {
 		register({name: 'category'}, rules.category);
-		register({name: 'tag'}, rules.tag);
+    register({name: 'tag'}, rules.tag);
+    // register({name: 'image'}, rules.image);
   }, [register])
 
   const updateValue = 
     (field, value) => setValue(field, value, {shouldValidate: true, shouldDirty: true});
 
 
-  const onChangeHandler = event =>{
+  const onChangeHandler = (e) =>{
 
-    // console.log(event.target.files[0]);
-    setIsSelectedFile({
-      data: event.target.files[0],
-      loaded: 0,
-    })
+    if (e.target.files.length) {
+      setImage({
+        preview: URL.createObjectURL(e.target.files[0]),
+        raw: e.target.files[0]
+      });
+    }
+    
+    // const file = e.target.files[0];
+    // setValue('image', e.target.files[0]);
+    // setIsSelectedFile(file);
 
 }
 
 
-  const onSubmit = async formData => {
+  const onSubmit = async (formData) => {
+
     let payload = {
-      file: selectedFile.data,
+      image: image.raw,
       name: formData.nama_produk,
       price: formData.price,
       discount: formData.discount,
@@ -73,12 +82,12 @@ const ProductAdd = () => {
       <br />
       <div>
         <form onSubmit={handleSubmit(onSubmit)}>
-          <input type="file" name="file" onChange={onChangeHandler}/>
           <FormControl label="Nama Produk" errorMessage={errors.nama_produk?.message} color="black">
             <InputText
               placeholder="Nama Produk"
               fitContainer
               name="nama_produk"
+              value="Nasi Goreng"
               ref={register(rules.nama_produk)}
             />
           </FormControl>
@@ -86,6 +95,7 @@ const ProductAdd = () => {
           <FormControl label="Harga" errorMessage={errors.price?.message} color="black">
             <InputText
               placeholder="Harga"
+              value="12000"
               fitContainer
               name="price"
               ref={register(rules.price)}
@@ -95,6 +105,7 @@ const ProductAdd = () => {
           <FormControl label="Diskon" errorMessage={errors.discount?.message} color="black">
             <InputText
               placeholder="Diskon"
+              value="0"
               fitContainer
               name="discount"
               ref={register(rules.discount)}
@@ -105,6 +116,7 @@ const ProductAdd = () => {
               <SelectCategory
                 onChange={option => updateValue('category', option)}
                 value={getValues().category}
+                ref={register(rules.category)}
               />
           </FormControl>
 
@@ -112,8 +124,28 @@ const ProductAdd = () => {
               <SelectTags
                 onChange={option => updateValue('tag', option)}
                 value={getValues().tag}
+                ref={register(rules.tag)}
               />
           </FormControl>
+
+          
+          <FormControl label="Gambar Produk" errorMessage={errors.image?.message} color="black">
+            <input type="file" name="image" required ref={register(rules.image)} onChange={onChangeHandler}/>
+          </FormControl>
+          <label htmlFor="upload-button">
+            {image.preview ? (
+              <img src={image.preview} alt="dummy" width="300" height="300" />
+            ) : (
+              <>
+                <span className="fa-stack fa-2x mt-3 mb-2">
+                  <i className="fas fa-circle fa-stack-2x" />
+                  <i className="fas fa-store fa-stack-1x fa-inverse" />
+                </span>
+                <h5 className="text-left">Upload your photo</h5>
+              </>
+            )}
+          </label>
+          <br />
           
           <Button fitContainer>
               Simpan

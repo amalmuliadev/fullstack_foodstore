@@ -7,7 +7,7 @@ const rules = {
   price: {
       required: { value: true, message: 'Harga tidak boleh kosong.'}
   },
-  diskon: {
+  discount: {
       required: { value: true, message: 'diskon tidak boleh kosong'}
   },
   category: {
@@ -15,6 +15,9 @@ const rules = {
   },
   tag: {
       required: { value: true, message: 'tag tidak boleh kosong.'}
+  },
+  image: {
+    required: { value: true, message: 'image tidak boleh kosong.'}
   }
 }
 export { rules };

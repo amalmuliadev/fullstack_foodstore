@@ -13,7 +13,9 @@ export async function createProduct(payload){
 
     return await axios.post(config.api_host + "/api/products", payload, {
         headers: {
-            authorization: `Bearer ${token}`
+            authorization: `Bearer ${token}`,
+            // 'Content-Type': 'multipart/form-data'
+            "Content-type": "application/json"
         }
     })
 }

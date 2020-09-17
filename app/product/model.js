@@ -19,6 +19,11 @@ const productSchema = Schema({
     default: 0
   },
   
+  discount: {
+    type: Number,
+    default: 0
+  },
+  
   image_url: String,
 
   category: {
