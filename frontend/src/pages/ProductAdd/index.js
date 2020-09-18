@@ -2,7 +2,6 @@ import React from 'react'
 import {LayoutOne,
   InputText,
   FormControl,
-  // Textarea,
   Button,
   Text} from 'upkit';
 import TopBar from '../../components/TopBar';
@@ -12,7 +11,6 @@ import { useHistory } from 'react-router-dom';
 import { rules } from './validation';
 import SelectCategory from '../../components/SelectCategory';
 import SelectTags from '../../components/SelectTags';
-// import { formatRupiah } from '../../utils/format-rupiah';
 
 import { createProduct } from '../../api/product';
 
@@ -20,11 +18,10 @@ const ProductAdd = () => {
 
   let history = useHistory();
   let { handleSubmit, register, errors, setValue, watch, getValues } = useForm();
+
   const [image, setImage] = React.useState({ preview: "", raw: "" });
-  // let [ selectedFile, setIsSelectedFile ] = React.useState();
 
   let allFields = watch();
-
 
   React.useEffect(() => {
 		register({name: 'category'}, rules.category);
@@ -32,9 +29,7 @@ const ProductAdd = () => {
     // register({name: 'image'}, rules.image);
   }, [register])
 
-  const updateValue = 
-    (field, value) => setValue(field, value, {shouldValidate: true, shouldDirty: true});
-
+  const updateValue = (field, value) => setValue(field, value, {shouldValidate: true, shouldDirty: true});
 
   const onChangeHandler = (e) =>{
 
@@ -44,26 +39,24 @@ const ProductAdd = () => {
         raw: e.target.files[0]
       });
     }
+
+  }
+
+
+  const onSubmit = async (formHook) => {
+  
+    let payload = new FormData();
+
+    // let tags_id = arr.find(value => value.value)
+
+    payload.append('image', image.raw);
+    payload.append('name', formHook.nama_produk);
+    payload.append('price', formHook.price);
+    payload.append('discount', formHook.discount);
+    payload.append('category', formHook.category.value);
+    payload.append('tags', formHook.tag);
     
-    // const file = e.target.files[0];
-    // setValue('image', e.target.files[0]);
-    // setIsSelectedFile(file);
-
-}
-
-
-  const onSubmit = async (formData) => {
-
-    let payload = {
-      image: image.raw,
-      name: formData.nama_produk,
-      price: formData.price,
-      discount: formData.discount,
-      category: formData.category.value,
-      tags: formData.tag,
-    }
-
-    console.log(payload);
+    console.log(formHook.tag);
 
     let { data } = await createProduct(payload);
 

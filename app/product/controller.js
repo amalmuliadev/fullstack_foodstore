@@ -83,17 +83,19 @@ async function store(req, res, next){
 		}
 
 		if(payload.tags && payload.tags.length){
-			// let tags =
-			// 	await Tag
-			// 	.find({name: {$in: payload.tags}});
+			let tags =
+				await Tag
+        .find({name: {$in: payload.tags}});
+        
+      return res.json(payload.tags._id);
 
 			// (1) cek apakah tags membuahkan hasil
-			// if(tags.length){
+			if(tags.length){
         let tags = payload.tags;
 				
 				// (2) jika ada, maka kita ambil `_id` untuk masing-masing `Tag` dan gabungkan dengan payload
 				payload = {...payload, tags: tags.map( tag => tag.value)}
-			// }
+			}
 		}
 
     if(req.file){
