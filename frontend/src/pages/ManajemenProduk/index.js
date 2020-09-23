@@ -8,7 +8,9 @@ import { LayoutOne,
   Badge, ButtonCircle
 } from 'upkit';
 import FaFilter from '@meronex/icons/fa/FaFilter';
-import { Link } from 'react-router-dom';
+import FaEdit from '@meronex/icons/fa/FaEdit';
+import FaTrash from '@meronex/icons/fa/FaTrash';
+import { Link, useHistory } from 'react-router-dom';
 import TopBar from '../../components/TopBar';
 import { useDispatch, useSelector } from 'react-redux';
 import { config } from '../../config';
@@ -17,6 +19,8 @@ import {
     setPage,
     setKeyword,
     } from '../../features/Products/actions';
+
+import { deleteProduct } from '../../api/product';
 
 
 const ManajemenProduk = () => {
@@ -36,8 +40,19 @@ const columns = [
   { Header: 'Diskon', accessor: 'discount'},
   { Header: 'Kategori', accessor: items => {
       return <Badge color="blue">{items.category.name}</Badge>
-  }}
+  }},
+  { Header: 'Action', accessor: items => {
+    return <div><Link to={`/edit-produk/${items._id}`}><ButtonCircle icon={<FaEdit/>}/></Link>
+    
+    <ButtonCircle onClick={() => deleteProduct(items._id)} icon={<FaTrash/>}/></div>
+}}
 ];
+
+let history = useHistory();
+
+const onSelect = (items) => {
+  history.push(`/manajemen-produk/edit/${items}`);
+}
 
   return (
     <LayoutOne size="large">

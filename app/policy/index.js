@@ -44,7 +44,11 @@ const policies = {
      can('read', 'Invoice', {user_id: user._id});
 
      // membaca `Product` miliknya
-     can('create', 'Product', {user_id: user._id});
+     can('read', 'Product', {user_id: user._id});
+
+    //  can('create', 'Product', {user_id: user._id});
+
+    //  can('delete', 'Product', {user_id: user._id});
 
    },
 

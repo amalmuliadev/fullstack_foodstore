@@ -20,7 +20,7 @@ export default function Invoice(){
       .then(({data}) => {
         
        if(data?.error){
-         setError(data.message || "Terjadi keslahan yang tidak diketahui");
+         setError(data.message || "Terjadi kesalahan yang tidak diketahui");
        } 
 
        setInvoice(data);

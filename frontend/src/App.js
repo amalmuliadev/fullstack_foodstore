@@ -27,6 +27,7 @@ import { getCart } from './api/cart';
 import GuardRoute from './components/GuardRoute';
 import GuestOnlyRoute from './components/GuestOnlyRoute';
 import GuardAdminRoute from './components/GuardAdminRoute';
+import ProductEdit from './pages/ProductEdit';
 
 function App() {
   React.useEffect(() => {
@@ -61,6 +62,9 @@ function App() {
             </GuardRoute>
             <GuardAdminRoute path="/manajemen-produk/tambah">
                 <ProductAdd />            
+            </GuardAdminRoute>
+            <GuardAdminRoute path="/edit-produk/:product_id">
+                <ProductEdit />            
             </GuardAdminRoute>
             <GuardAdminRoute path="/manajemen-produk">
                 <ManajemenProduk />            

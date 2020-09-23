@@ -52,6 +52,25 @@ async function index(req, res, next){
   }
 }
 
+async function show(req, res, next){
+  try{
+
+    let { id } = req.params;
+
+    let product = await Product.findOne({_id: id})
+      .populate('category')
+      .populate('tags')
+
+    return res.json(product);
+
+  } catch(err){
+    return res.json({
+      error: 1,
+      message: `Error when getting product`
+    })
+  }
+}
+
 
 async function store(req, res, next){
 
@@ -146,27 +165,22 @@ async function update(req, res, next){
     let payload = req.body;
 
 		if(payload.category){
-		   let category = 
-				  await Category
-				  .findOne({name: {$regex: payload.category, $options: 'i'}});
+      
+      let category = payload.category;
 
 			 if(category){ 
-          payload = {...payload, category: category._id};
+          payload = {...payload, category: category};
        } else {
           delete payload.category;
        }
 		}
 
 		if(payload.tags && payload.tags.length){
-			let tags =
-				await Tag
-				.find({name: {$in: payload.tags}});
 
-			// (1) cek apakah tags membuahkan hasil
+        let tags = JSON.parse(payload.tags);
+			
 			if(tags.length){
-				
-				// (2) jika ada, maka kita ambil `_id` untuk masing-masing `Tag` dan gabungkan dengan payload
-				payload = {...payload, tags: tags.map( tag => tag._id)}
+				payload = {...payload, tags: tags.map( tag => tag.value)}
 			}
 		}
 
@@ -228,11 +242,11 @@ async function destroy(req, res, next){
   try {
 
     let policy = policyFor(req.user);
-
-    if(!policy.can('delete', 'Product')){ // <-- can delete
-       return res.json({
+    
+    if(!policy.can('delete', 'Product')){ 
+        return res.json({
           error: 1, 
-          message: `Anda tidak memiliki akses untuk menghapus produk`
+          message: `Anda tidak memiliki akses untuk mengupdate produk`
       });
     }
 
@@ -253,6 +267,7 @@ async function destroy(req, res, next){
 
 module.exports = {
    index,
+   show,
    update,
    store,
    destroy
