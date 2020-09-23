@@ -21,7 +21,7 @@ const ProductAdd = () => {
 
   const [image, setImage] = React.useState({ preview: "", raw: "" });
 
-  let allFields = watch();
+  watch();
 
   React.useEffect(() => {
 		register({name: 'category'}, rules.category);
@@ -47,16 +47,12 @@ const ProductAdd = () => {
   
     let payload = new FormData();
 
-    // let tags_id = arr.find(value => value.value)
-
     payload.append('image', image.raw);
     payload.append('name', formHook.nama_produk);
     payload.append('price', formHook.price);
     payload.append('discount', formHook.discount);
     payload.append('category', formHook.category.value);
-    payload.append('tags', formHook.tag);
-    
-    console.log(formHook.tag);
+    payload.append('tags', JSON.stringify(formHook.tag));
 
     let { data } = await createProduct(payload);
 
@@ -80,7 +76,6 @@ const ProductAdd = () => {
               placeholder="Nama Produk"
               fitContainer
               name="nama_produk"
-              value="Nasi Goreng"
               ref={register(rules.nama_produk)}
             />
           </FormControl>
@@ -88,7 +83,6 @@ const ProductAdd = () => {
           <FormControl label="Harga" errorMessage={errors.price?.message} color="black">
             <InputText
               placeholder="Harga"
-              value="12000"
               fitContainer
               name="price"
               ref={register(rules.price)}
@@ -98,7 +92,6 @@ const ProductAdd = () => {
           <FormControl label="Diskon" errorMessage={errors.discount?.message} color="black">
             <InputText
               placeholder="Diskon"
-              value="0"
               fitContainer
               name="discount"
               ref={register(rules.discount)}

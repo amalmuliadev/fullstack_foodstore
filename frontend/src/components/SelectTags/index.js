@@ -27,7 +27,6 @@ const SelectTags = ({value, onChange}) => {
   return (
     <Select
       options={tags.map(tag => ({ label: tag.name, value: tag._id}))}
-      data={tags.map(tag => ({ name: tag.name, _id: tag._id}))}
       value={value}
       onChange={onChange}
       isMulti

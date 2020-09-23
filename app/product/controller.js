@@ -5,7 +5,7 @@ const Product = require('./model');
 const Category = require('../category/model');
 const Tag = require('../tag/model');
 const config = require('../config');
-const policy = require('../policy');
+const { policyFor } = require('../policy');
 
 async function index(req, res, next){ 
 
@@ -57,22 +57,19 @@ async function store(req, res, next){
 
   try{
 
-    // let policy = policyFor(req.user);
+    let policy = policyFor(req.user);
 
-		// if(!policy.can('create', 'Product')){
-    //    return res.json({
-    //       error: 1, 
-    //       message: `Anda tidak memiliki akses untuk membuat produk`
-    //   });
-    // }
+		if(!policy.can('create', 'Product')){
+       return res.json({
+          error: 1, 
+          message: `Anda tidak memiliki akses untuk membuat produk`
+      });
+    }
     
     let payload = req.body;
 
 		if(payload.category){
-		  //  let category = 
-			// 	  await Category
-			// 	  .findOne({name: {$regex: payload.category, $options: 'i'}});
-
+      
       let category = payload.category;
 
 			 if(category){ 
@@ -83,17 +80,10 @@ async function store(req, res, next){
 		}
 
 		if(payload.tags && payload.tags.length){
-			let tags =
-				await Tag
-        .find({name: {$in: payload.tags}});
-        
-      return res.json(payload.tags._id);
 
-			// (1) cek apakah tags membuahkan hasil
+        let tags = JSON.parse(payload.tags);
+			
 			if(tags.length){
-        let tags = payload.tags;
-				
-				// (2) jika ada, maka kita ambil `_id` untuk masing-masing `Tag` dan gabungkan dengan payload
 				payload = {...payload, tags: tags.map( tag => tag.value)}
 			}
 		}
