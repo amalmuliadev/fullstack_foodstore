@@ -50,7 +50,7 @@ const ProductEdit = () => {
     register({name: 'discount'}, rules.discount);
 		register({name: 'category'}, rules.category);
     register({name: 'tag'}, rules.tag);
-  }, [params, register])
+  }, [params, register, setValue])
 
   const updateValue = (field, value) => setValue(field, value, {shouldValidate: true, shouldDirty: true});
 

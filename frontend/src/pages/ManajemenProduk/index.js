@@ -10,7 +10,7 @@ import { LayoutOne,
 import FaFilter from '@meronex/icons/fa/FaFilter';
 import FaEdit from '@meronex/icons/fa/FaEdit';
 import FaTrash from '@meronex/icons/fa/FaTrash';
-import { Link, useHistory } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import TopBar from '../../components/TopBar';
 import { useDispatch, useSelector } from 'react-redux';
 import { config } from '../../config';
@@ -52,12 +52,6 @@ const columns = [
     <ButtonCircle onClick={() => {if(window.confirm('Delete this product ?')){deleteProduct(items._id); setDelstatus(1)}}} icon={<FaTrash/>}/></div>
 }}
 ];
-
-let history = useHistory();
-
-const onSelect = (items) => {
-  history.push(`/manajemen-produk/edit/${items}`);
-}
 
   return (
     <LayoutOne size="large">
