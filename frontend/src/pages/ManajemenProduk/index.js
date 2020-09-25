@@ -27,9 +27,14 @@ const ManajemenProduk = () => {
   let dispatch = useDispatch();
   let products = useSelector(state => state.products);
 
+  let [delstatus, setDelstatus ] = React.useState(0)
+
   React.useEffect(() => {
-    dispatch(fetchProducts());
-}, [dispatch, products.currentPage,  products.keyword]);
+
+      dispatch(fetchProducts());
+      setDelstatus(0);
+      
+  }, [dispatch, delstatus, products.currentPage,  products.keyword]);
 
 const columns = [
   { Header: 'Gambar', accessor: items => {
@@ -44,7 +49,7 @@ const columns = [
   { Header: 'Action', accessor: items => {
     return <div><Link to={`/edit-produk/${items._id}`}><ButtonCircle icon={<FaEdit/>}/></Link>
     
-    <ButtonCircle onClick={() => deleteProduct(items._id)} icon={<FaTrash/>}/></div>
+    <ButtonCircle onClick={() => {if(window.confirm('Delete this product ?')){deleteProduct(items._id); setDelstatus(1)}}} icon={<FaTrash/>}/></div>
 }}
 ];
 

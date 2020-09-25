@@ -16,8 +16,5 @@ const rules = {
   tag: {
       required: { value: true, message: 'tag tidak boleh kosong.'}
   },
-  image: {
-    required: { value: true, message: 'image tidak boleh kosong.'}
-  }
 }
 export { rules };

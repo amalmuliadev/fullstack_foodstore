@@ -36,19 +36,20 @@ const ProductEdit = () => {
         }
 
         setProduct(data);
-
+        setValue('nama_produk', data.name);
+        setValue('price', data.price);
+        setValue('discount', data.discount);
         setValue('category', {label: data.category.name, value: data.category._id});
-
-        setValue('tag', data.tags.map((items) => {
-          return { 'label': items.name, 'value': items._id}
-        }));
+        setValue('tag', data.tags.map((items) => { return { 'label': items.name, 'value': items._id} }));
         
       })
       .finally(() => setStatus('idle'));
 
+    register({name: 'nama_produk'}, rules.nama_produk);
+    register({name: 'price'}, rules.price);
+    register({name: 'discount'}, rules.discount);
 		register({name: 'category'}, rules.category);
     register({name: 'tag'}, rules.tag);
-    // register({name: 'image'}, rules.image);
   }, [params, register])
 
   const updateValue = (field, value) => setValue(field, value, {shouldValidate: true, shouldDirty: true});
@@ -115,8 +116,8 @@ const ProductEdit = () => {
             <InputText
               placeholder="Nama Produk"
               fitContainer
-              value={product?.name}
               name="nama_produk"
+              value={getValues().nama_produk}
               ref={register(rules.nama_produk)}
             />
           </FormControl>
@@ -125,8 +126,8 @@ const ProductEdit = () => {
             <InputText
               placeholder="Harga"
               fitContainer
-              value={product?.price}
               name="price"
+              value={getValues().price}
               ref={register(rules.price)}
             />
           </FormControl>
@@ -135,8 +136,8 @@ const ProductEdit = () => {
             <InputText
               placeholder="Diskon"
               fitContainer
-              value={product?.discount}
               name="discount"
+              value={getValues().discount}
               ref={register(rules.discount)}
             />
           </FormControl>
@@ -159,7 +160,7 @@ const ProductEdit = () => {
 
           
           <FormControl label="Gambar Produk" errorMessage={errors.image?.message} color="black">
-            <input type="file" name="image" required ref={register(rules.image)} onChange={onChangeHandler}/>
+            <input type="file" name="image" ref={register(rules.image)} onChange={onChangeHandler}/>
           </FormControl>
           <label htmlFor="upload-button">
             {(product?.image_url && !image.preview) ?
