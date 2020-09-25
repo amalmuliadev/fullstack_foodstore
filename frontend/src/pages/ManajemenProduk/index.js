@@ -1,4 +1,6 @@
 import React from 'react'
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 import {formatRupiah} from '../../utils/format-rupiah'
 import { LayoutOne,
   Text,
@@ -36,6 +38,16 @@ const ManajemenProduk = () => {
       
   }, [dispatch, delstatus, products.currentPage,  products.keyword]);
 
+const notifDelete = () => toast.success('Delete Success !', {
+  position: "bottom-center",
+  autoClose: 5000,
+  hideProgressBar: true,
+  closeOnClick: true,
+  pauseOnHover: true,
+  draggable: true,
+  progress: undefined,
+});
+
 const columns = [
   { Header: 'Gambar', accessor: items => {
   return <img style={{height: 40}} src={`${config.api_host}/upload/${items.image_url}`} alt="gambarProduk"/>
@@ -49,7 +61,7 @@ const columns = [
   { Header: 'Action', accessor: items => {
     return <div><Link to={`/edit-produk/${items._id}`}><ButtonCircle icon={<FaEdit/>}/></Link>
     
-    <ButtonCircle onClick={() => {if(window.confirm('Delete this product ?')){deleteProduct(items._id); setDelstatus(1)}}} icon={<FaTrash/>}/></div>
+    <ButtonCircle onClick={() => {if(window.confirm('Delete this product ?')){deleteProduct(items._id); notifDelete(); setDelstatus(1)}}} icon={<FaTrash/>}/></div>
 }}
 ];
 
@@ -64,6 +76,17 @@ const columns = [
                 Tambah baru
             </Button>
         </Link>
+        <ToastContainer
+          position="bottom-center"
+          autoClose={5000}
+          hideProgressBar
+          newestOnTop={false}
+          closeOnClick
+          rtl={false}
+          pauseOnFocusLoss
+          draggable
+          pauseOnHover
+          />
         <br/>
         <br/>
         <div className="w-full text-center mb-10 mt-5">
